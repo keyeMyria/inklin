@@ -1,0 +1,21 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: geth
+  labels:
+    app: geth
+
+spec:
+  containers:
+    - name: geth
+      image: ethereum/client-go
+      ports:
+      - containerPort: 8545
+      args: ["--rpc", "--fast", "--rpccorsdomain", "*", "--rpcaddr", "0.0.0.0", "--rpcvhosts", "*"]
+      volumeMounts:
+      - mountPath: "/root/.ethereum"
+        name: volume
+  volumes:
+    - name: volume
+      persistentVolumeClaim:
+        claimName: geth-disk

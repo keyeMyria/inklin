@@ -1,0 +1,23 @@
+{
+  "name": "inklin",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@material-ui/icons": "^1.0.0-beta.42",
+    "@material-ui/lab": "^1.0.0-alpha.1",
+    "chart.js": "^2.7.2",
+    "material-ui": "^1.0.0-beta.41",
+    "ms-bing-speech-service": "^2.0.2",
+    "react": "^16.3.1",
+    "react-chartjs-2": "^2.7.0",
+    "react-dom": "^16.3.1",
+    "react-force-graph": "^1.1.16",
+    "react-scripts": "1.1.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}

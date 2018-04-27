@@ -1,0 +1,15 @@
+development:
+  clients:
+    default:
+      database: visualise_ethereum
+      hosts:
+        - mongo-mongodb:27017
+  options:
+production:
+  sessions:
+    default:
+      options:
+        ssl: true
+  clients:
+    default:
+      uri: 

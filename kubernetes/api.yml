@@ -1,0 +1,17 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: api
+  labels:
+    app: api
+
+spec:
+  containers:
+    - name: api
+      image: inklin/api
+      env:
+      - name: MONGODB
+        value: "mongodb://mongo-mongodb:27017/visualise_ethereum"
+      ports:
+      - containerPort: 80
+

@@ -1,0 +1,19 @@
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+import {Bar} from 'react-chartjs-2';
+
+
+class VolumeChart extends React.Component {
+
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return <Bar data={this.props.data} width={400} height={200} redraw={this.props.shouldRedraw} />
+  };
+
+}
+
+export default (VolumeChart);
