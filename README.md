@@ -19,3 +19,7 @@ I found Parity to have quite a few problems with missing data, so reverted to us
 ```console
 geth --rpc --fast --rpccorsdomain * --rpcaddr 0.0.0.0 --rpcvhosts *
 ```
+
+## Kubernetes
+
+Directory containing Kube pod, service, and PV definitions for all components
