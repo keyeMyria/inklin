@@ -34,6 +34,8 @@ rescue => exception
     last_block = web3.eth.blockNumber
 end
 
+last_block = 5309998
+
 puts(last_block)
 number_of_threads = 10
 
@@ -53,7 +55,15 @@ until last_block == 0
     block = web3.eth.getBlockByNumber(last_block, true)
     transactions = []
     for tx in block.transactions
-        transactions << {:partition => last_block % 20, :hash => tx.hash, :block_number => last_block, :block_time => block.timestamp_time, :from => tx.from, :to => tx.to, :value => tx.value_eth, :data => tx.input}
+
+        # Is this a token contract?
+        if tx.input.match(/^0xa9059cbb/) 
+            type = "token"
+        else
+            type = ""
+        end
+
+        transactions << {:type => type, :partition => last_block % 20, :hash => tx.hash, :block_number => last_block, :block_time => block.timestamp_time, :from => tx.from, :to => tx.to, :value => tx.value_eth, :data => tx.input}
     end
 
     txs = transactions
