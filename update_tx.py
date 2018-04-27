@@ -19,5 +19,3 @@ for b in bs:
     print(b["block_number"])
     b["type"] = "token"
     transactions.save(b)
-
-    #txs_cursor = transactions.find({"to": contract, "block_number": int(b["block_number"])})
