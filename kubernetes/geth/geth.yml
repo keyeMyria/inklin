@@ -11,7 +11,7 @@ spec:
       image: ethereum/client-go
       ports:
       - containerPort: 8545
-      args: ["--rpc", "--fast", "--rpccorsdomain", "*", "--rpcaddr", "0.0.0.0", "--rpcvhosts", "*"]
+      args: ["--rpc", "--fast", "--rpccorsdomain", "*", "--rpcaddr", "0.0.0.0", "--rpcvhosts", "*", "--cache", "1024"]
       volumeMounts:
       - mountPath: "/root/.ethereum"
         name: volume

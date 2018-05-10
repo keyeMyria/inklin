@@ -38,6 +38,8 @@ const styles = {
 class MenuAppBar extends React.Component {
   constructor(props) {
     super(props);
+   // this.handleFocus = this.props.handleFocus.bind(this);
+
   }
 
   handleLuis(info) {
@@ -67,7 +69,7 @@ class MenuAppBar extends React.Component {
                 >
                   <SettingsVoice />
                 </IconButton>              <div>
-                <SearchField handleLuis={this.props.onLuis} placeholder={this.props.placeholder} />
+                <SearchField handleFocus={this.props.handleFocus} handleLuis={this.props.onLuis} placeholder={this.props.placeholder} />
               </div>
 
           </Toolbar>

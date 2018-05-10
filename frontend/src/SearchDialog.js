@@ -21,11 +21,11 @@ import IconButton from 'material-ui/IconButton';
 
 const styles = {
     list: {
-        width: "auto",
+        width: "360px",
     },
     fullList: {
-        width: 'auto',
-    },
+        width: '200px',
+    }
 };
 
 class SearchDialog extends React.Component {

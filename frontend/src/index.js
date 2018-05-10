@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { ForceGraph3D } from 'react-force-graph'
 import { ForceGraph2D } from 'react-force-graph'
 import MenuAppBar from './MenuAppBar'
 import VolumeChart from './VolumeChart';
@@ -9,11 +10,18 @@ import ActionsButton from './ActionsButton';
 import ContractChooser from './ContractChooser';
 import Toggles from './Toggles';
 import SearchDialog from './SearchDialog';
+import Pagination from './Pagination';
 
 import './index.css';
 
+const theme = createMuiTheme({
+  palette: {
+    type: 'dark',
+  },
+});
 
 class Inklin extends React.Component {
+
 
   constructor(props) {
     super(props);
@@ -24,8 +32,12 @@ class Inklin extends React.Component {
 
     this.addData = this.addData.bind(this);
     this.handleContractChooserClose = this.handleContractChooserClose.bind(this);
+    this.handleToggle = this.handleToggle.bind(this)
 
     this.state = {
+      FG2DIsHidden: false,
+      FG3DIsHidden: true,
+      volumeIsHidden: true,
       showSearch: false,
       placeholder: 'What do you want to know? (e.g. Show all EOS transactions today)',
       searchResults: [{ name: "One" }, { name: "two" }, { name: "three" }],
@@ -58,10 +70,11 @@ class Inklin extends React.Component {
   }
 
 
+
   showContract(searchTerm, timing) {
 
     if (searchTerm != "") {
-      const url = 'http://localhost:7071/api/search/' + searchTerm
+      const url = 'http://localhost:7071/api/inklin/search/' + searchTerm
 
       console.log(url);
 
@@ -159,8 +172,7 @@ class Inklin extends React.Component {
     //   vd.labels.shift();
     //  }
 
-    this.state.shouldRedraw = true
-    this.setState({ volume_data: vd })
+    this.setState({ volume_data: vd, shouldRedraw: true })
 
   }
 
@@ -183,12 +195,51 @@ class Inklin extends React.Component {
   }
 
   getAll() {
-    const url = "http://52.234.227.0/api/inklin/transactions/2018-04-27/2018-04-28"
+    const url = "http://localhost:7071/api/inklin/transactions/2017-06-19/2017-06-20"
+    //const url = "http://52.234.227.0/api/inklin/transactions/2017-06-19/2017-06-20"
     const nodes = []
     const links = []
 
     fetch(url).then(res => res.json()).then(data => {
-      console.log(`Got ${data.length} results`);
+      console.log(`Got ${data.docs.length} results`);
+
+
+      for (let y = 0; y < data.docs.length; y++) {
+        const from = data.docs[y]["from"];
+        const to = data.docs[y]["to"];
+        //const value = data[y]["value"];
+
+        let exists = false;
+        if (from != null && to != null) {
+          for (let i = 0; i < nodes.length; i++) {
+            if (to === nodes[i].id) {
+              exists = true;
+            }
+          }
+          nodes.push({ id: from, color: "white", name: from });
+          // Only add the node if it doesn't exist
+          if (!exists) {
+            nodes.push({ id: to, color: "white", name: to });
+          }
+
+          links.push({ source: from, target: to, color: "#2aaee2" })
+        }
+      }
+
+      this.setState({ data: { nodes, links } })
+
+    });
+  }
+
+
+  stream() {
+    const url = "http://localhost:7071/api/inklin/live/0"
+
+    const nodes = []
+    const links = []
+
+    fetch(url).then(res => res.json()).then(data => {
+      console.log(`Got ${data.docs.length} results`);
 
 
       for (let y = 0; y < data.length; y++) {
@@ -198,25 +249,53 @@ class Inklin extends React.Component {
 
         let exists = false;
         if (from != null && to != null) {
-        for (let i = 0; i < nodes.length; i++) {
-          if (to === nodes[i].id) {
-            exists = true;
+          for (let i = 0; i < nodes.length; i++) {
+            if (to === nodes[i].id) {
+              exists = true;
+            }
           }
-        }
-        nodes.push({ id: from, color: "white", name: from });
-        // Only add the node if it doesn't exist
-        if (!exists) {
-          nodes.push({ id: to, color: "white", name: to });
-        }
+          nodes.push({ id: from, color: "white", name: from });
+          // Only add the node if it doesn't exist
+          if (!exists) {
+            nodes.push({ id: to, color: "white", name: to });
+          }
 
-        links.push({ source: from, target: to, color: "#2aaee2" })
-      }
+          links.push({ source: from, target: to, color: "#2aaee2" })
+        }
       }
 
       this.setState({ data: { nodes, links } })
-      console.log(this.state.data)
 
     });
+  }
+
+
+  handleToggle(action) {
+    switch (action) {
+      case "live":
+        console.log("Handle Live")
+        break;
+      case "perspective":
+        console.log("Handle Perspective")
+        const data = this.state.data
+        console.log(data)
+        this.setState({data: {
+          nodes: [{ id: 0 }, { id: 1 }],
+          links: []
+        }})
+
+        this.setState({ FG2DIsHidden: !this.state.FG2DIsHidden, FG3DIsHidden: !this.state.FG3DIsHidden })
+
+        this.getAll()
+
+        break;
+      case "volume":
+        this.setState({ volumeIsHidden: !this.state.volumeIsHidden })
+        break;
+
+    }
+
+    console.log(action)
   }
 
   componentDidMount() {
@@ -302,28 +381,36 @@ class Inklin extends React.Component {
     const { data } = this.state;
 
     return (
-      <div>
-        {/* <MenuAppBar onLuis={this.handleLuis} onSpeak={this.handleSpeak} placeholder={this.state.placeholder} /> */}
+      <MuiThemeProvider theme={theme}>
 
-        <ForceGraph2D enableNodeDrag={false} graphData={data} />
+        <div>
+          <MenuAppBar onLuis={this.handleLuis} onSpeak={this.handleSpeak} handleFocus={this.handleSearch} placeholder={this.state.placeholder} />
 
-        <div className="volumechart">
-          <VolumeChart data={this.state.volume_data} options={this.state.volume_options} shouldRedraw={this.state.shouldRedraw} />
+        
+          {!this.state.FG3DIsHidden && <ForceGraph3D enableNodeDrag={false} graphData={data} cooldownTime={5000} />}
+          {!this.state.FG2DIsHidden && <ForceGraph2D enableNodeDrag={false} graphData={data} cooldownTime={5000} />}
+
+
+          {!this.state.volumeIsHidden && <VolumeChart data={this.state.volume_data} options={this.state.volume_options} shouldRedraw={this.state.shouldRedraw} />}
+
+          <InfoSnackBar open={this.state.showSnackbar} message={this.state.messageSnackbar} onClose={this.s} />
+          {/* <ActionsButton onSearch={this.handleSearch} /> */}
+
+          <ContractChooser
+            choices={this.state.searchResults}
+            selectedValue={this.state.contract}
+            open={this.state.showContractChooser}
+            onClose={this.handleContractChooserClose}
+          />
+
+
+         {!this.state.paginationIsHidden && <Pagination pages={this.state.pages} />} 
+
+          <Toggles handleToggle={this.handleToggle} />
+          <SearchDialog open={this.state.showSearch} closeDrawer={this.handleCloseSearch} />
         </div>
+      </MuiThemeProvider>
 
-        <InfoSnackBar open={this.state.showSnackbar} message={this.state.messageSnackbar} onClose={this.s} />
-        <ActionsButton onSearch={this.handleSearch} />
-
-        <ContractChooser
-          choices={this.state.searchResults}
-          selectedValue={this.state.contract}
-          open={this.state.showContractChooser}
-          onClose={this.handleContractChooserClose}
-        />
-
-        <Toggles />
-        <SearchDialog open={this.state.showSearch} closeDrawer={this.handleCloseSearch} />
-      </div>
     );
   }
 }

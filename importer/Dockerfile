@@ -2,7 +2,7 @@ FROM ruby
 
 COPY Gemfile /
 RUN bundle install
-COPY import_transactions_bulk.rb /
+COPY import_transactions_batch.rb /
 COPY mongoid.yml /
 
-CMD [ "/import_transactions_bulk.rb" ]
+CMD [ "/import_transactions_batch.rb" ]

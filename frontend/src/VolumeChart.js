@@ -11,7 +11,11 @@ class VolumeChart extends React.Component {
   }
 
   render() {
-    return <Bar data={this.props.data} width={400} height={200} redraw={this.props.shouldRedraw} />
+    return (
+    <div className="volumechart">
+      <Bar data={this.props.data} width={400} height={200} redraw={this.props.shouldRedraw} />
+    </div>
+    )
   };
 
 }

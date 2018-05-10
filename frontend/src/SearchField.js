@@ -22,6 +22,7 @@ function renderInput(inputProps) {
         ...other,
       }}
       value={this.props.value}
+      onFocus={this.props.handleFocus}
       onKeyPress={(ev) => {
         console.log(`Pressed keyCode ${ev.key}`);
         if (ev.key == 'Enter') {
@@ -40,14 +41,15 @@ function renderInput(inputProps) {
 
 const styles = theme => ({
   input: {
-    color: "black",
-    width: "300px"
+    color: "white",
+    width: "600px"
   }
 });
 
 class SearchField extends React.Component {
   constructor(props) {
     super(props);
+   // this.handleFocus = this.props.handleFocus.bind(this);
 
     this.state = {
       SearchField: ''
@@ -99,6 +101,7 @@ class SearchField extends React.Component {
           classes,
           placeholder: this.props.placeholder,
         }}
+        onFocus={this.props.handleFocus}
         onChange={this.handleChange}
         onKeyPress={(ev) => {
           if (ev.key === 'Enter') {

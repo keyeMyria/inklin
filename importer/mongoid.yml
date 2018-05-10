@@ -3,13 +3,11 @@ development:
     default:
       database: visualise_ethereum
       hosts:
-        - mongo-mongodb:27017
-  options:
+        - localhost:27017
+
 production:
-  sessions:
-    default:
-      options:
-        ssl: true
   clients:
     default:
-      uri: 
+      database: visualise_ethereum
+      hosts:
+        - mongo-mongodb:27017

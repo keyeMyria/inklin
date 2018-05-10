@@ -9,8 +9,9 @@ import List, {
   ListSubheader,
 } from 'material-ui/List';
 import Switch from 'material-ui/Switch';
-import WifiIcon from '@material-ui/icons/Wifi';
-import BluetoothIcon from '@material-ui/icons/Bluetooth';
+import PerspectiveIcon from '@material-ui/icons/ThreeDRotation';
+import GoLive from '@material-ui/icons/FiberSmartRecord';
+import ShowVolume from '@material-ui/icons/Assessment';
 
 const styles = theme => ({
   root: {
@@ -26,24 +27,13 @@ const styles = theme => ({
 });
 
 class Toggles extends React.Component {
-  state = {
-    checked: ['wifi'],
-  };
 
-  handleToggle = value => () => {
-    const { checked } = this.state;
-    const currentIndex = checked.indexOf(value);
-    const newChecked = [...checked];
+  constructor(props) {
+    super(props);
+  }
 
-    if (currentIndex === -1) {
-      newChecked.push(value);
-    } else {
-      newChecked.splice(currentIndex, 1);
-    }
-
-    this.setState({
-      checked: newChecked,
-    });
+  handleChange = name => event => {
+    this.props.handleToggle(name)
   };
 
   render() {
@@ -51,28 +41,37 @@ class Toggles extends React.Component {
 
     return (
       <div className={classes.root}>
-        <List subheader={<ListSubheader>Settings</ListSubheader>}>
-          <ListItem>
+        <List subheader={<ListSubheader>View Settings</ListSubheader>}>
+        <ListItem>
             <ListItemIcon>
-              <WifiIcon />
+              <PerspectiveIcon />
             </ListItemIcon>
-            <ListItemText primary="Wi-Fi" />
+            <ListItemText primary="Change Perspective" />
             <ListItemSecondaryAction>
               <Switch
-                onChange={this.handleToggle('wifi')}
-                checked={this.state.checked.indexOf('wifi') !== -1}
+                onChange={this.handleChange('perspective')}
               />
             </ListItemSecondaryAction>
           </ListItem>
           <ListItem>
             <ListItemIcon>
-              <BluetoothIcon />
+              <ShowVolume />
             </ListItemIcon>
-            <ListItemText primary="Bluetooth" />
+            <ListItemText primary="Show Volume" />
             <ListItemSecondaryAction>
               <Switch
-                onChange={this.handleToggle('bluetooth')}
-                checked={this.state.checked.indexOf('bluetooth') !== -1}
+                onChange={this.handleChange('volume')}
+              />
+            </ListItemSecondaryAction>
+          </ListItem>
+          <ListItem>
+            <ListItemIcon>
+              <GoLive />
+            </ListItemIcon>
+            <ListItemText primary="Live View" />
+            <ListItemSecondaryAction>
+              <Switch
+                onChange={this.handleChange('live')}
               />
             </ListItemSecondaryAction>
           </ListItem>

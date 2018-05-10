@@ -15,6 +15,8 @@ require 'mongoid'
 
 force_sync = ARGV[0]
 
+#force_sync = "yes"
+
 # Lazy initialise the Transaction class
 
 class Transaction
@@ -22,10 +24,10 @@ class Transaction
     include Mongoid::Attributes::Dynamic
 end
 
-Mongoid.load!("./mongoid.yml", :production)
+Mongoid.load!("./mongoid.yml", :development)
 
 
-web3 = Web3::Eth::Rpc.new host: "parity-service"
+web3 = Web3::Eth::Rpc.new #host: 'geth'
 
 begin
     syncing = web3.eth.syncing
@@ -33,6 +35,8 @@ begin
 rescue => exception
     last_block = web3.eth.blockNumber
 end
+
+#last_block = 5131094
 
 puts(last_block)
 
@@ -46,11 +50,14 @@ until last_block == 0
         block = web3.eth.getBlockByNumber(last_block, true)
         transactions = []
         for tx in block.transactions
-            #if tx.value_eth > 0
-            transactions << {:hash => tx.hash, :block_number => last_block, :block_time => block.timestamp_time, :from => tx.from, :to => tx.to, :value => tx.value_eth, :data => tx.input}
-            #Block.create({:hash => tx.hash, :block_number => last_block, :block_time => block.timestamp_time, :from => tx.from, :to => tx.to, :value => tx.value_eth, :data => tx.input})    
-            #puts transactions.last.to_json
-            #end
+        # Is this a token contract?
+        if tx.input.match(/^0xa9059cbb/) 
+            type = "token"
+        else
+            type = ""
+        end
+
+        transactions << {:type => type, :partition => last_block % 20, :hash => tx.hash, :block_number => last_block, :block_time => block.timestamp_time, :from => tx.from, :to => tx.to, :value => tx.value_eth, :data => tx.input}
         end
     rescue => exception
         puts(exception)
