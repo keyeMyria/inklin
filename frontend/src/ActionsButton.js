@@ -15,6 +15,7 @@ import SearchIcon from '@material-ui/icons/Search';
 const styles = theme => ({
   root: {
     height: 380,
+    backgroundColor: "black"
   },
   speedDial: {
     position: 'absolute',

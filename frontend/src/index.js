@@ -22,6 +22,7 @@ const theme = createMuiTheme({
 
 class Inklin extends React.Component {
 
+  static NODE_R = 8;
 
   constructor(props) {
     super(props);
@@ -35,8 +36,11 @@ class Inklin extends React.Component {
     this.handleToggle = this.handleToggle.bind(this)
 
     this.state = {
-      FG2DIsHidden: false,
-      FG3DIsHidden: true,
+      highlightNodes: [],
+      highlightLink: null,
+      cameraOrbit: 0,
+      FG2DIsHidden: true,
+      FG3DIsHidden: false,
       volumeIsHidden: true,
       showSearch: false,
       placeholder: 'What do you want to know? (e.g. Show all EOS transactions today)',
@@ -74,7 +78,7 @@ class Inklin extends React.Component {
   showContract(searchTerm, timing) {
 
     if (searchTerm != "") {
-      const url = 'http://localhost:7071/api/inklin/search/' + searchTerm
+      const url = 'http://api.inkl.in/api/inklin/search/' + searchTerm
 
       console.log(url);
 
@@ -119,30 +123,40 @@ class Inklin extends React.Component {
     this.setState({ showSearch: true })
   }
 
-  handleLuis(resp) {
+  handleLuis(resp, lookup) {
 
-    if (resp["topScoringIntent"]["intent"] == "Show Contract") {
-      var token = ""
-      var timing = ""
+    if (lookup === "Address") {
 
-      for (var i in resp["entities"]) {
-        if (resp["entities"][i]["type"] == "token") {
-          token = resp["entities"][i]["entity"].toUpperCase()
+    }
+
+    if (lookup === "Block") {
+
+    }
+
+    if (lookup === "Natural") {
+      if (resp["topScoringIntent"]["intent"] == "Show Contract") {
+        var token = ""
+        var timing = ""
+
+        for (var i in resp["entities"]) {
+          if (resp["entities"][i]["type"] == "token") {
+            token = resp["entities"][i]["entity"].toUpperCase()
+          }
+
+
+          if (resp["entities"][i]["type"] == "builtin.datetimeV2.date") {
+            timing = resp["entities"][i]["resolution"]["values"][0]["value"]
+          }
+
+          if (resp["entities"][i]["type"] == "builtin.datetimeV2.datetimerange" || resp["entities"][i]["type"] == "builtin.datetimeV2.daterange") {
+            timing = resp["entities"][i]["resolution"]["values"][0]["start"]
+          }
+          this.showContract(token, timing)
+
         }
-
-
-        if (resp["entities"][i]["type"] == "builtin.datetimeV2.date") {
-          timing = resp["entities"][i]["resolution"]["values"][0]["value"]
-        }
-
-        if (resp["entities"][i]["type"] == "builtin.datetimeV2.datetimerange" || resp["entities"][i]["type"] == "builtin.datetimeV2.daterange") {
-          timing = resp["entities"][i]["resolution"]["values"][0]["start"]
-        }
-        this.showContract(token, timing)
-
+      } else {
+        this.setState({ messageSnackbar: "Sorry I don't understand" });
       }
-    } else {
-      this.setState({ messageSnackbar: "Sorry I don't understand" });
     }
   }
 
@@ -195,7 +209,8 @@ class Inklin extends React.Component {
   }
 
   getAll() {
-    const url = "http://localhost:7071/api/inklin/transactions/2017-06-19/2017-06-20"
+    const url = process.env.REACT_APP_API_SERVER + "/api/inklin/txaddress/0x2B5634C42055806a59e9107ED44D43c426E58258"
+    //const url = "http://localhost:7071/api/inklin/transactions/2018-02-06/2018-02-07"
     //const url = "http://52.234.227.0/api/inklin/transactions/2017-06-19/2017-06-20"
     const nodes = []
     const links = []
@@ -204,36 +219,14 @@ class Inklin extends React.Component {
       console.log(`Got ${data.docs.length} results`);
 
 
-      for (let y = 0; y < data.docs.length; y++) {
-        const from = data.docs[y]["from"];
-        const to = data.docs[y]["to"];
-        //const value = data[y]["value"];
-
-        let exists = false;
-        if (from != null && to != null) {
-          for (let i = 0; i < nodes.length; i++) {
-            if (to === nodes[i].id) {
-              exists = true;
-            }
-          }
-          nodes.push({ id: from, color: "white", name: from });
-          // Only add the node if it doesn't exist
-          if (!exists) {
-            nodes.push({ id: to, color: "white", name: to });
-          }
-
-          links.push({ source: from, target: to, color: "#2aaee2" })
-        }
-      }
-
-      this.setState({ data: { nodes, links } })
+      this.setState({ data: data.docs })
 
     });
   }
 
 
   stream() {
-    const url = "http://localhost:7071/api/inklin/live/0"
+    const url = process.env.REACT_APP_API_SERVER + "/api/inklin/live/0"
 
     const nodes = []
     const links = []
@@ -279,10 +272,12 @@ class Inklin extends React.Component {
         console.log("Handle Perspective")
         const data = this.state.data
         console.log(data)
-        this.setState({data: {
-          nodes: [{ id: 0 }, { id: 1 }],
-          links: []
-        }})
+        this.setState({
+          data: {
+            nodes: [{ id: 0 }, { id: 1 }],
+            links: []
+          }
+        })
 
         this.setState({ FG2DIsHidden: !this.state.FG2DIsHidden, FG3DIsHidden: !this.state.FG3DIsHidden })
 
@@ -375,25 +370,90 @@ class Inklin extends React.Component {
 
 
     this.getAll()
+    const distance = 600;
+
+    this.fg.cameraPosition({ z: distance });
+    // camera orbit
+    let angle = 0;
+    const cameraOrbit = setInterval(() => {
+      this.fg.cameraPosition({
+        x: distance * Math.sin(angle),
+        z: distance * Math.cos(angle)
+      });
+      angle += Math.PI / 300;
+    }, 10);
+
+    this.setState({ cameraOrbit: cameraOrbit })
   }
 
+  nodeClicked = node => {
+    clearInterval(this.state.cameraOrbit);
+
+    // Aim at node from outside it
+    const distance = 40;
+    const distRatio = 1 + distance / Math.hypot(node.x, node.y, node.z);
+    this.fg.cameraPosition(
+      { x: node.x * distRatio, y: node.y * distRatio, z: node.z * distRatio }, // new position
+      node, // lookAt ({ x, y, z })
+      3000  // ms transition duration
+    );
+  };
+
+
+  _handleNodeHover = node => {
+    this.setState({ highlightNodes: node ? [node] : [] });
+  };
+
+  _handleLinkHover = link => {
+    this.setState({
+      highlightLink: link,
+      highlightNodes: link ? [link.source, link.target] : []
+    });
+  };
+
+  _paintNode = (node, ctx) => {
+    const { NODE_R } = Inklin;
+    const { highlightNodes } = this.state;
+    if (highlightNodes.indexOf(node) !== -1) { // add ring
+      ctx.beginPath();
+      ctx.arc(node.x, node.y, NODE_R * 1.4, 0, 2 * Math.PI, false);
+      ctx.fillStyle = 'red';
+      ctx.fill();
+    }
+    ctx.beginPath();
+    ctx.arc(node.x, node.y, NODE_R, 0, 2 * Math.PI, false);
+    ctx.fillStyle = 'midnightblue';
+    ctx.fill();
+  };
+
   render() {
-    const { data } = this.state;
+    //    const { data } = this.state;
+    const { data, highlightLink } = this.state;
 
     return (
-      <MuiThemeProvider theme={theme}>
 
-        <div>
-          <MenuAppBar onLuis={this.handleLuis} onSpeak={this.handleSpeak} handleFocus={this.handleSearch} placeholder={this.state.placeholder} />
+      <div>
+        <MuiThemeProvider theme={theme}>
+          <MenuAppBar onLuis={this.handleLuis} onSpeak={this.handleSpeak} placeholder={this.state.placeholder} />
 
-        
-          {!this.state.FG3DIsHidden && <ForceGraph3D enableNodeDrag={false} graphData={data} cooldownTime={5000} />}
-          {!this.state.FG2DIsHidden && <ForceGraph2D enableNodeDrag={false} graphData={data} cooldownTime={5000} />}
+
+          {!this.state.FG3DIsHidden && <ForceGraph3D ref={el => { this.fg = el; }} enableNodeDrag={false} graphData={data} onNodeClick={this.nodeClicked}
+            //  nodeRelSize={1}
+            linkWidth={3}
+            linkDirectionalParticles={4}
+            linkDirectionalParticleWidth={link => link === highlightLink ? 4 : 0}
+          // nodeCanvasObject={this._paintNode} 
+          // onNodeHover={this._handleNodeHover}
+          // onLinkHover={this._handleLinkHover} 
+          />}
+
+
+          {!this.state.FG2DIsHidden && <ForceGraph2D enableNodeDrag={false} graphData={data} />}
 
 
           {!this.state.volumeIsHidden && <VolumeChart data={this.state.volume_data} options={this.state.volume_options} shouldRedraw={this.state.shouldRedraw} />}
 
-          <InfoSnackBar open={this.state.showSnackbar} message={this.state.messageSnackbar} onClose={this.s} />
+          {/* <InfoSnackBar open={this.state.showSnackbar} message={this.state.messageSnackbar} onClose={this.s} /> */}
           {/* <ActionsButton onSearch={this.handleSearch} /> */}
 
           <ContractChooser
@@ -404,12 +464,12 @@ class Inklin extends React.Component {
           />
 
 
-         {!this.state.paginationIsHidden && <Pagination pages={this.state.pages} />} 
+          {!this.state.paginationIsHidden && <Pagination pages={this.state.pages} />}
 
           <Toggles handleToggle={this.handleToggle} />
           <SearchDialog open={this.state.showSearch} closeDrawer={this.handleCloseSearch} />
-        </div>
-      </MuiThemeProvider>
+        </MuiThemeProvider>
+      </div>
 
     );
   }

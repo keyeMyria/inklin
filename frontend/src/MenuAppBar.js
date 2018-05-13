@@ -6,6 +6,7 @@ import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
 import IconButton from 'material-ui/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import LogoIcon from '@material-ui/icons/BlurOn';
 import SettingsVoice from '@material-ui/icons/SettingsVoice';
 import Switch from 'material-ui/Switch';
 import { FormControlLabel, FormGroup } from 'material-ui/Form';
@@ -21,6 +22,9 @@ const theme = createMuiTheme({
   },
 });
 
+const style = {
+  backgroundColor: 'rgba(0,0,0,0.5)'
+};
 
 const styles = {
   root: {
@@ -28,6 +32,7 @@ const styles = {
   },
   flex: {
     flex: 1,
+    fontWeight: "lighter"
   },
   menuButton: {
     marginLeft: -12,
@@ -52,12 +57,16 @@ class MenuAppBar extends React.Component {
     
     return (
       <div className="menu">
-        <MuiThemeProvider theme={theme}>
 
-        <AppBar position="static">
+        <AppBar position="static" style={style}>
           <Toolbar>
-            <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
+            {/* <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
               <MenuIcon />
+            </IconButton>
+             */}
+
+            <IconButton className={classes.logoIcon} color="inherit" aria-label="Logo">
+              <LogoIcon />
             </IconButton>
             <Typography variant="title" color="inherit" className={classes.flex}>
               Inklin
@@ -74,7 +83,6 @@ class MenuAppBar extends React.Component {
 
           </Toolbar>
         </AppBar>
-      </MuiThemeProvider>
       </div>
     );
   }

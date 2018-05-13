@@ -22,7 +22,7 @@ function renderInput(inputProps) {
         ...other,
       }}
       value={this.props.value}
-      onFocus={this.props.handleFocus}
+      //  onFocus={this.props.handleFocus}
       onKeyPress={(ev) => {
         console.log(`Pressed keyCode ${ev.key}`);
         if (ev.key == 'Enter') {
@@ -49,7 +49,7 @@ const styles = theme => ({
 class SearchField extends React.Component {
   constructor(props) {
     super(props);
-   // this.handleFocus = this.props.handleFocus.bind(this);
+    // this.handleFocus = this.props.handleFocus.bind(this);
 
     this.state = {
       SearchField: ''
@@ -57,10 +57,19 @@ class SearchField extends React.Component {
   }
   askLuis = () => {
 
-    fetch("https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/6b784922-f81a-40af-b616-afb200c5634e?subscription-key=d40e1e70cc734cc09cdd5f669d90c708&verbose=true&timezoneOffset=0&q=" + this.state.SearchField)
-      .then(response => response.json())
-      .then(data => this.props.handleLuis(data))
-  };
+    console.log(this.state.SearchField.length)
+    if (this.state.SearchField.length === 42 && this.state.SearchField.startsWith("0x")) {
+      console.log("Address/Contract Lookup")
+      this.props.handleLuis(this.state.SearchField, "Address")
+    } else if (!isNaN(this.state.SearchField)) {
+      console.log("Block Lookup")
+      this.props.handleLuis(this.state.SearchField, "Block")
+    } else {
+      fetch("https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/6b784922-f81a-40af-b616-afb200c5634e?subscription-key=d40e1e70cc734cc09cdd5f669d90c708&verbose=true&timezoneOffset=0&q=" + this.state.SearchField)
+        .then(response => response.json())
+        .then(data => this.props.handleLuis(data, "Natural"))
+    }
+  }
 
   handleChange = event => {
     this.setState({

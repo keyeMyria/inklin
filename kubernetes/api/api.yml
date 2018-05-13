@@ -6,9 +6,11 @@ metadata:
     app: api
 
 spec:
+  nodeSelector:
+    type: worker
   containers:
     - name: api
-      image: inklin/api
+      image: inklin/api:v2
       env:
       - name: MONGODB
         value: "mongodb://mongo-mongodb:27017/visualise_ethereum"

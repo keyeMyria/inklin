@@ -6,12 +6,14 @@ metadata:
     app: geth
 
 spec:
+  nodeSelector:
+    type: worker
   containers:
     - name: geth
       image: ethereum/client-go
       ports:
       - containerPort: 8545
-      args: ["--rpc", "--fast", "--rpccorsdomain", "*", "--rpcaddr", "0.0.0.0", "--rpcvhosts", "*", "--cache", "1024"]
+      args: ["--rpc", "--rpccorsdomain", "*", "--rpcaddr", "0.0.0.0", "--rpcvhosts", "*", "--cache", "1024"]
       volumeMounts:
       - mountPath: "/root/.ethereum"
         name: volume
@@ -19,3 +21,5 @@ spec:
     - name: volume
       persistentVolumeClaim:
         claimName: geth-disk
+
+

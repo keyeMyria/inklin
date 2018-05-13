@@ -5,6 +5,8 @@ metadata:
   labels:
     app: importer
 spec:
+  nodeSelector:
+    type: worker
   containers:
     - name: importer
       image: inklin/importer:latest
