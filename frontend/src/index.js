@@ -463,18 +463,28 @@ class Inklin extends React.Component {
 
   nodeClicked2d = node => {
     clearInterval(this.state.cameraOrbit);
+    if (this.fg.zoom() === 16) {
+      ReactGA.event({
+        category: 'Graph',
+        action: 'Double Click',
+        label: node.id
+      });
+      this.setState({address: node.id})
+      this.fg.zoom(1, 100);
+      this.getAll(node.id)
 
-    ReactGA.event({
-      category: 'Graph',
-      action: 'Click',
-      value: node
-    });
+    } else {
+      ReactGA.event({
+        category: 'Graph',
+        action: 'Click',
+        label: node.id
+      });
 
-    this.setState({address: node.id})
-    // Aim at node from outside it
-    this.fg.centerAt(node.x, node.y, 1000);
-    this.fg.zoom(16, 2000);
-
+      this.setState({address: node.id})
+      // Aim at node from outside it
+      this.fg.centerAt(node.x, node.y, 1000);
+      this.fg.zoom(16, 2000);
+    }
   };
 
   _handleNodeHover = node => {

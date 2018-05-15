@@ -7,9 +7,9 @@ events.on("push", (brigadeEvent, project) => {
 
     var frontend = new Job("job-runner-frontend")
     frontend.storage.enabled = false
-    frontend.image = "azure-cli:0.0.5"
+    frontend.image = "alpine"
     frontend.tasks = [
-        `cd /frontend`,
+        `cd /src/frontend`,
         `ls`
     ]
 
@@ -17,7 +17,7 @@ events.on("push", (brigadeEvent, project) => {
     api.storage.enabled = false
     api.image = "alpine"
     api.tasks = [
-        `cd /api`,
+        `cd /src/api`,
         `ls`
     ]
 
