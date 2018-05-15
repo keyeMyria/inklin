@@ -80,11 +80,15 @@ until last_block == 0
     
 
             begin
+                web3 = Web3::Eth::Rpc.new host: 'geth'
+
                 syncing = web3.eth.syncing
                 last_block = syncing["currentBlock"].to_i(16)
                 puts("Syncing - #{last_block}")
 
             rescue => exception
+                web3 = Web3::Eth::Rpc.new host: 'geth'
+
                 last_block = web3.eth.blockNumber
                 puts("Latest - #{last_block}")
             end

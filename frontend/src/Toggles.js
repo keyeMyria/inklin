@@ -13,6 +13,11 @@ import PerspectiveIcon from '@material-ui/icons/ThreeDRotation';
 import GoLive from '@material-ui/icons/FiberSmartRecord';
 import ShowVolume from '@material-ui/icons/Assessment';
 
+import ReactGA from 'react-ga';
+
+ReactGA.initialize('UA-64729178-1');
+ReactGA.pageview(window.location.pathname + window.location.search);
+
 const styles = theme => ({
   root: {
     width: '100%',
@@ -28,11 +33,13 @@ const styles = theme => ({
 
 class Toggles extends React.Component {
 
-  constructor(props) {
-    super(props);
-  }
-
   handleChange = name => event => {
+    ReactGA.event({
+      category: 'Toggle',
+      action: 'Change',
+      value: name
+    });
+    
     this.props.handleToggle(name)
   };
 

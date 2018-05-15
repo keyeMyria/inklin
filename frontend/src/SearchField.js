@@ -1,41 +1,13 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import TextField from 'material-ui/TextField';
-import Paper from 'material-ui/Paper';
-import { MenuItem } from 'material-ui/Menu';
 import { withStyles } from 'material-ui/styles';
-import Snackbar from 'material-ui/Snackbar';
-import Slide from 'material-ui/transitions/Slide';
 
-function renderInput(inputProps) {
-  const { classes, ref, ...other } = inputProps;
+import ReactGA from 'react-ga';
 
-  return (
-
-    <TextField
-      fullWidth
-      InputProps={{
-        inputRef: ref,
-        classes: {
-          input: classes.input,
-        },
-        ...other,
-      }}
-      value={this.props.value}
-      //  onFocus={this.props.handleFocus}
-      onKeyPress={(ev) => {
-        console.log(`Pressed keyCode ${ev.key}`);
-        if (ev.key == 'Enter') {
-          console.log("Submit")
-          // Do code here
-          ev.preventDefault();
-        }
-      }}
-    />
+ReactGA.initialize('UA-64729178-1');
+ReactGA.pageview(window.location.pathname + window.location.search);
 
 
-  );
-}
 
 
 
@@ -56,6 +28,12 @@ class SearchField extends React.Component {
     };
   }
   askLuis = () => {
+
+    ReactGA.event({
+      category: 'Search',
+      action: 'Term',
+      label: this.state.SearchField
+    });
 
     console.log(this.state.SearchField.length)
     if (this.state.SearchField.length === 42 && this.state.SearchField.startsWith("0x")) {

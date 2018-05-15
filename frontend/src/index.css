@@ -64,6 +64,29 @@ body {
     background-color: black;
   }
 
+  .progressIndicator {
+    width: 25%;
+    height:100px;
+    text-align: left;
+    position: fixed;
+    top: 55%;
+    left: 42%;
+    margin-left:-70px;
+    margin-top:-50px;   
+}
+
+  .infoPane {
+    position: absolute;
+    bottom: 5px;
+    right: 10px;
+    opacity: .6;
+    padding-right: 10px;
+
+    /* Height of the footer */
+    z-index: 9999;
+    color: #40c4ff;
+    background-color: black;
+  }
   .menu {
     position: absolute;
     top: 0px;
