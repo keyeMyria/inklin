@@ -89,7 +89,7 @@ until last_block == 0
             rescue => exception
                 web3 = Web3::Eth::Rpc.new host: 'geth'
 
-                last_block = web3.eth.blockNumber
+                last_block = web3.eth.blockNumber 
                 puts("Latest - #{last_block}")
             end
         else
