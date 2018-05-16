@@ -12,6 +12,7 @@ import WorkIcon from '@material-ui/icons/Work';
 import FormatAlignJustify from '@material-ui/icons/FormatAlignJustify';
 
 import BeachAccessIcon from '@material-ui/icons/BeachAccess';
+import { ENFILE } from 'constants';
 
 const styles = theme => ({
   root: {
@@ -32,6 +33,7 @@ class Info extends React.Component {
   }
 
   render() {
+    const block_info = `${block_info} - ${this.props.block_time}`
 
     return (
       <div className="infoPane">
@@ -40,20 +42,22 @@ class Info extends React.Component {
             <Avatar style={style}>
               <AddressIcon />
             </Avatar>
-            <ListItemText primary="Address" secondary={this.props.address} />
+            <ListItemText primary="Looking at Address" secondary={this.props.address} />
           </ListItem>
-          <ListItem>
+
+          {/* <ListItem>
             <Avatar style={style}>
               <FormatAlignJustify />
             </Avatar>
-            <ListItemText primary="Block" secondary="Jan 7, 2014" />
-          </ListItem>
-          <ListItem>
+            <ListItemText primary="Block" secondary={block_info} />
+          </ListItem> */}
+
+          {/* <ListItem>
             <Avatar style={style}>
               <BeachAccessIcon />
             </Avatar>
             <ListItemText primary="Vacation" secondary="July 20, 2014" />
-          </ListItem>
+          </ListItem> */}
         </List>
       </div>
     );

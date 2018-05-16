@@ -531,16 +531,20 @@ class Inklin extends React.Component {
 
           {!this.state.FG3DIsHidden && <ForceGraph3D ref={el => { this.fg = el; }} enableNodeDrag={false} graphData={data} onNodeClick={this.nodeClicked3d}
             //  nodeRelSize={1}
-            linkWidth={3}
+            linkWidth={1}
             linkDirectionalParticles={4}
-            linkDirectionalParticleWidth={link => link === highlightLink ? 4 : 0}
+            linkDirectionalParticleWidth={2}
           // nodeCanvasObject={this._paintNode} 
           // onNodeHover={this._handleNodeHover}
           // onLinkHover={this._handleLinkHover} 
           />}
 
 
-          {!this.state.FG2DIsHidden && <ForceGraph2D ref={el => { this.fg = el; }}  graphData={data} onNodeClick={this.nodeClicked2d} />}
+          {!this.state.FG2DIsHidden && <ForceGraph2D ref={el => { this.fg = el; }}  graphData={data} onNodeClick={this.nodeClicked2d}             
+            linkWidth={1}
+            linkDirectionalParticles={4}
+            linkDirectionalParticleWidth={2}
+            />}
 
 
           {!this.state.volumeIsHidden && <VolumeChart data={this.state.volume_data} options={this.state.volume_options} shouldRedraw={this.state.shouldRedraw} />}
@@ -558,12 +562,12 @@ class Inklin extends React.Component {
             onClose={this.handleContractChooserClose}
           />
 
-          
+
       */} 
 
           <Toggles handleToggle={this.handleToggle} />
           <SearchDialog open={this.state.showSearch} closeDrawer={this.handleCloseSearch} />
-          <Info address={this.state.address} /> 
+          <Info address={this.state.address} blocknumber={this.state.blocknumber} blocktime={this.state.blocktime} /> 
         </MuiThemeProvider>
       </div>
 
