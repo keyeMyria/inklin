@@ -558,7 +558,7 @@ class Inklin extends React.Component {
             onClose={this.handleContractChooserClose}
           />
 
-      */}
+      */} 
 
           <Toggles handleToggle={this.handleToggle} />
           <SearchDialog open={this.state.showSearch} closeDrawer={this.handleCloseSearch} />
