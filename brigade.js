@@ -25,7 +25,7 @@ events.on("push", (brigadeEvent, project) => {
 
     var frontend_helm = new Job("job-runner-frontend-helm")
     frontend_helm.storage.enabled = false
-    frontend_helm.image = "lachlanevenson/k8s-helm"
+    frontend_helm.image = "lachlanevenson/k8s-helm:v2.8.2"
     frontend_helm.tasks = [
         `helm upgrade --install --reuse-values frontend ./src/Charts/frontend --set image=${acrServer}/frontend --set imageTag=${imageTag}`
     ]
