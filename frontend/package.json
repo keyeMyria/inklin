@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@material-ui/icons": "^1.0.0-beta.43",
-    "@material-ui/lab": "^1.0.0-alpha.1",
+    "@material-ui/icons": "",
+    "@material-ui/lab": "",
     "chart.js": "^2.7.2",
-    "material-ui": "^1.0.0-beta.47",
+    "material-ui": "",
     "ms-bing-speech-service": "^2.0.3",
     "react": "^16.3.2",
     "react-chartjs-2": "^2.7.2",
