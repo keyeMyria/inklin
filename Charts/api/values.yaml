@@ -1,0 +1,5 @@
+
+# Default values for chart
+replicaCount: 1
+image: "inklin.azurecr.io/api"
+imageTag: "d415bd1"

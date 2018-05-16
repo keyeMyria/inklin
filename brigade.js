@@ -60,6 +60,5 @@ events.on("push", (brigadeEvent, project) => {
     //Group.runEach([api, frontend_api])
     //Group.runEach([importer, frontend_helm])
 
-
 })
 
