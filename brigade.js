@@ -11,7 +11,7 @@ events.on("push", (brigadeEvent, project) => {
     var today = new Date()
 
     var gitSHA = brigadeEvent.revision.commit.substr(0,7)
-    var imageTag = "master-" + String(gitSHA)
+    var imageTag = String(gitSHA)
 
     var frontend = new Job("job-runner-frontend")
     frontend.storage.enabled = false
@@ -24,15 +24,26 @@ events.on("push", (brigadeEvent, project) => {
 
     var api = new Job("job-runner-api")
     api.storage.enabled = false
-    api.image = "alpine"
+    api.image = "microsoft/azure-cli"
     api.tasks = [
         `cd /src/api`,
-        `ls`
+        `az login --service-principal -u ${azServicePrincipal} -p ${azClientSecret} --tenant ${azTenant}`,
+        `az acr build -t api:${imageTag} -f ./Dockerfile . -r ${acrName}`
+    ]
+
+    var importer = new Job("job-runner-importer")
+    importer.storage.enabled = false
+    importer.image = "microsoft/azure-cli"
+    importer.tasks = [
+        `cd /src/importer_batch`,
+        `az login --service-principal -u ${azServicePrincipal} -p ${azClientSecret} --tenant ${azTenant}`,
+        `az acr build -t importer:${imageTag} -f ./Dockerfile . -r ${acrName}`
     ]
 
     var pipeline = new Group()
     pipeline.add(frontend)
     pipeline.add(api)
+    pipeline.add(importer)
     pipeline.runAll()
 
 })
