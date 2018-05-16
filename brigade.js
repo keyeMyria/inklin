@@ -19,7 +19,7 @@ events.on("push", (brigadeEvent, project) => {
     frontend.tasks = [
         `cd /src/frontend`,
         `az login --service-principal -u ${azServicePrincipal} -p ${azClientSecret} --tenant ${azTenant}`,
-        `az acr build -t frontend:${imageTag} -f ./Dockerfile --context . -r ${acrName}`
+        `az acr build -t frontend:${imageTag} -f ./Dockerfile . -r ${acrName}`
     ]
 
     var api = new Job("job-runner-api")
