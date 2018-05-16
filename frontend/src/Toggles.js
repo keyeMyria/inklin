@@ -62,6 +62,7 @@ class Toggles extends React.Component {
               />
             </ListItemSecondaryAction>
           </ListItem>
+{/* 
           <ListItem>
             <ListItemIcon>
               <ShowVolume />
@@ -84,6 +85,7 @@ class Toggles extends React.Component {
               />
             </ListItemSecondaryAction>
           </ListItem>
+*/}
         </List>
       </div>
     );

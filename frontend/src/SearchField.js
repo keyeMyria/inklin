@@ -77,7 +77,7 @@ class SearchField extends React.Component {
 
     const inputProps = {
       classes,
-      placeholder: 'What do you want to know? (e.g. Show all EOS transactions today)',
+      placeholder: 'Find Contract/Address...',
       value: this.state.value
     }
 

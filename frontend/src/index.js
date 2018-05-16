@@ -46,6 +46,7 @@ class Inklin extends React.Component {
     this.state = {
       displayProgress: false,
       address: "0x274F3c32C90517975e29Dfc209a23f315c1e5Fc7",
+      previousaddress: "0x274F3c32C90517975e29Dfc209a23f315c1e5Fc7", 
       highlightNodes: [],
       highlightLink: null,
       cameraOrbit: 0,
@@ -53,7 +54,7 @@ class Inklin extends React.Component {
       FG3DIsHidden: true,
       volumeIsHidden: true,
       showSearch: false,
-      placeholder: 'What do you want to know? (e.g. Show all EOS transactions today)',
+      placeholder: 'Find Contract/Address...',
       searchResults: [{ name: "One" }, { name: "two" }, { name: "three" }],
       showContractChooser: false,
       contract: "",
@@ -487,6 +488,13 @@ class Inklin extends React.Component {
     }
   };
 
+
+  nodeHover2d = node => {
+    if (node) {
+    this.setState({address: node.id})
+    }
+  };
+
   _handleNodeHover = node => {
     this.setState({ highlightNodes: node ? [node] : [] });
   };
@@ -544,6 +552,7 @@ class Inklin extends React.Component {
             linkWidth={1}
             linkDirectionalParticles={4}
             linkDirectionalParticleWidth={2}
+            onNodeHover={this.nodeHover2d}
             />}
 
 

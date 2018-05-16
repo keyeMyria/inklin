@@ -51,9 +51,9 @@ class MenuAppBar extends React.Component {
             <Typography variant="title" color="inherit" className={classes.flex}>
               Inklin
             </Typography>
-              <IconButton onClick={this.props.onSpeak} color="inherit">
+              {/* <IconButton onClick={this.props.onSpeak} color="inherit">
                 <SettingsVoice />
-              </IconButton>              
+              </IconButton>               */}
               <div>
                 <SearchField handleFocus={this.props.handleFocus} handleLuis={this.props.onLuis} placeholder={this.props.placeholder} />
               </div>
