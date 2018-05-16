@@ -15,7 +15,7 @@ events.on("push", (brigadeEvent, project) => {
 
     var frontend = new Job("job-runner-frontend")
     frontend.storage.enabled = false
-    frontend.image = "azure-cli"
+    frontend.image = "microsoft/azure-cli"
     frontend.tasks = [
         `cd /src/frontend`,
         `az login --service-principal -u ${azServicePrincipal} -p ${azClientSecret} --tenant ${azTenant}`,
