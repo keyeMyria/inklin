@@ -22,6 +22,14 @@ events.on("push", (brigadeEvent, project) => {
         `az acr build -t frontend:${imageTag} -f ./Dockerfile . -r ${acrName}`
     ]
 
+
+    var frontend_helm = new Job("job-runner-frontend-helm")
+    frontend_helm.storage.enabled = false
+    frontend_helm.image = "lachlanevenson/k8s-helm"
+    frontend_helm.tasks = [
+        `helm upgrade --install --reuse-values frontend ./src/Charts/frontend --set image=${acrServer}/frontend --set imageTag=${imageTag}`
+    ]
+
     var api = new Job("job-runner-api")
     api.storage.enabled = false
     api.image = "microsoft/azure-cli"
@@ -29,6 +37,13 @@ events.on("push", (brigadeEvent, project) => {
         `cd /src/api`,
         `az login --service-principal -u ${azServicePrincipal} -p ${azClientSecret} --tenant ${azTenant}`,
         `az acr build -t api:${imageTag} -f ./Dockerfile . -r ${acrName}`
+    ]
+
+    var frontend_api = new Job("job-runner-api-helm")
+    frontend_api.storage.enabled = false
+    frontend_api.image = "lachlanevenson/k8s-helm"
+    frontend_api.tasks = [
+        `helm upgrade --install --reuse-values api ./src/Charts/api --set image=${acrServer}/api --set imageTag=${imageTag}`
     ]
 
     var importer = new Job("job-runner-importer")
@@ -40,11 +55,11 @@ events.on("push", (brigadeEvent, project) => {
         `az acr build -t importer:${imageTag} -f ./Dockerfile . -r ${acrName}`
     ]
 
-    var pipeline = new Group()
-    pipeline.add(frontend)
-    pipeline.add(api)
-    pipeline.add(importer)
-    pipeline.runAll()
+
+    Group.runEach([frontend, frontend_helm])
+    //Group.runEach([api, frontend_api])
+    //Group.runEach([importer, frontend_helm])
+
 
 })
 
