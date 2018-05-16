@@ -41,7 +41,7 @@ events.on("push", (brigadeEvent, project) => {
 
     var frontend_api = new Job("job-runner-api-helm")
     frontend_api.storage.enabled = false
-    frontend_api.image = "lachlanevenson/k8s-helm"
+    frontend_api.image = "lachlanevenson/k8s-helm:v2.8.2"
     frontend_api.tasks = [
         `helm upgrade --install --reuse-values api ./src/Charts/api --set image=${acrServer}/api --set imageTag=${imageTag}`
     ]
