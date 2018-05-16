@@ -12,7 +12,6 @@ events.on("push", (brigadeEvent, project) => {
 
     var gitSHA = brigadeEvent.revision.commit.substr(0,7)
     var imageTag = "master-" + String(gitSHA)
-    var acrImage = image + ":" + imageTag
 
     var frontend = new Job("job-runner-frontend")
     frontend.storage.enabled = false
@@ -20,7 +19,7 @@ events.on("push", (brigadeEvent, project) => {
     frontend.tasks = [
         `cd /src/frontend`,
         `az login --service-principal -u ${azServicePrincipal} -p ${azClientSecret} --tenant ${azTenant}`,
-        `az acr build -t frontend:${gitSHA} -f ./Dockerfile --context . -r ${acrName}`
+        `az acr build -t frontend:${imageTag} -f ./Dockerfile --context . -r ${acrName}`
     ]
 
     var api = new Job("job-runner-api")
