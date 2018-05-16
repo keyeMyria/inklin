@@ -9,7 +9,7 @@ import List, { ListItem, ListItemAvatar, ListItemText } from 'material-ui/List';
 import Dialog, { DialogTitle } from 'material-ui/Dialog';
 import PersonIcon from '@material-ui/icons/Person';
 import AddIcon from '@material-ui/icons/Add';
-import Typography from 'material-ui/Typography';
+import Typography from 'material-ui/core/Typography';
 import blue from 'material-ui/colors/blue';
 
 const emails = ['username@gmail.com', 'user02@gmail.com'];
