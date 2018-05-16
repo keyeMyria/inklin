@@ -1,0 +1,27 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: parity
+  labels:
+    app: parity
+
+spec:
+  containers:
+    - name: parity
+      image: parity/parity:nightly
+      resources:
+        limits:
+          memory: 4Gi
+        requests:
+          memory: 2Gi
+
+      ports:
+      - containerPort: 8545
+      args: ["--geth", "--unsafe-expose"]
+      volumeMounts:
+      - mountPath: "/root/.local/share/io.parity.ethereum/"
+        name: volume
+  volumes:
+    - name: volume
+      persistentVolumeClaim:
+        claimName: parity-disk

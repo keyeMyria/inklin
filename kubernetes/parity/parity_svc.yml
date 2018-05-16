@@ -1,0 +1,12 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: parity-service
+spec:
+  selector:
+    app: parity
+  ports:
+  - name: parity
+    protocol: TCP
+    port: 8545
+    targetPort: 8545

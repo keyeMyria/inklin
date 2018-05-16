@@ -1,0 +1,138 @@
+{
+    "apiVersion": "v1",
+    "kind": "Pod",
+    "metadata": {
+        "creationTimestamp": "2018-05-12T14:50:54Z",
+        "labels": {
+            "app": "geth"
+        },
+        "name": "geth",
+        "namespace": "default",
+        "resourceVersion": "229148",
+        "selfLink": "/api/v1/namespaces/default/pods/geth",
+        "uid": "df114bcf-55f3-11e8-bd07-0a58ac1f1de3"
+    },
+    "spec": {
+        "containers": [
+            {
+                "args": [
+                    "--rpc",
+                    "--rpccorsdomain",
+                    "*",
+                    "--rpcaddr",
+                    "0.0.0.0",
+                    "--rpcvhosts",
+                    "*",
+                    "--cache",
+                    "1024"
+                ],
+                "image": "ethereum/client-go",
+                "imagePullPolicy": "Always",
+                "name": "geth",
+                "ports": [
+                    {
+                        "containerPort": 8545,
+                        "protocol": "TCP"
+                    }
+                ],
+                "resources": {},
+                "terminationMessagePath": "/dev/termination-log",
+                "terminationMessagePolicy": "File",
+                "volumeMounts": [
+                    {
+                        "mountPath": "/root/.ethereum",
+                        "name": "volume"
+                    },
+                    {
+                        "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                        "name": "default-token-dd5g5",
+                        "readOnly": true
+                    }
+                ]
+            }
+        ],
+        "dnsPolicy": "ClusterFirst",
+        "nodeName": "aks-nodepool1-23220957-1",
+        "nodeSelector": {
+            "type": "worker"
+        },
+        "restartPolicy": "Always",
+        "schedulerName": "default-scheduler",
+        "securityContext": {},
+        "serviceAccount": "default",
+        "serviceAccountName": "default",
+        "terminationGracePeriodSeconds": 30,
+        "tolerations": [
+            {
+                "effect": "NoExecute",
+                "key": "node.kubernetes.io/not-ready",
+                "operator": "Exists",
+                "tolerationSeconds": 300
+            },
+            {
+                "effect": "NoExecute",
+                "key": "node.kubernetes.io/unreachable",
+                "operator": "Exists",
+                "tolerationSeconds": 300
+            }
+        ],
+        "volumes": [
+            {
+                "name": "volume",
+                "persistentVolumeClaim": {
+                    "claimName": "geth-disk"
+                }
+            },
+            {
+                "name": "default-token-dd5g5",
+                "secret": {
+                    "defaultMode": 420,
+                    "secretName": "default-token-dd5g5"
+                }
+            }
+        ]
+    },
+    "status": {
+        "conditions": [
+            {
+                "lastProbeTime": null,
+                "lastTransitionTime": "2018-05-12T14:50:54Z",
+                "status": "True",
+                "type": "Initialized"
+            },
+            {
+                "lastProbeTime": null,
+                "lastTransitionTime": "2018-05-12T14:51:32Z",
+                "status": "True",
+                "type": "Ready"
+            },
+            {
+                "lastProbeTime": null,
+                "lastTransitionTime": "2018-05-12T14:50:54Z",
+                "status": "True",
+                "type": "PodScheduled"
+            }
+        ],
+        "containerStatuses": [
+            {
+                "containerID": "docker://d129f4383ea377291354c31c6e9042052da24f51c0c6de2e00bbc1262fed7749",
+                "image": "ethereum/client-go:latest",
+                "imageID": "docker-pullable://ethereum/client-go@sha256:49ce22728eced7f8d725943dcb57ccfde68c01d922338c3eb2a163635f5914d8",
+                "lastState": {},
+                "name": "geth",
+                "ready": true,
+                "restartCount": 0,
+                "state": {
+                    "running": {
+                        "startedAt": "2018-05-12T14:51:32Z"
+                    }
+                }
+            }
+        ],
+        "hostIP": "10.240.0.4",
+        "phase": "Running",
+        "podIP": "10.244.0.22",
+        "qosClass": "BestEffort",
+        "startTime": "2018-05-12T14:50:54Z"
+    }
+}

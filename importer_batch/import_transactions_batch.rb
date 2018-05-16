@@ -39,7 +39,7 @@ rescue => exception
     last_block = web3.eth.blockNumber
 end 
 
-#last_block = 1650070
+last_block = 5290010
 
 puts(last_block)
 
