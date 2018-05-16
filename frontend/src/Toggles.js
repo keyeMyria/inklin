@@ -1,14 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
-import List, {
-  ListItem,
-  ListItemIcon,
-  ListItemSecondaryAction,
-  ListItemText,
-  ListSubheader,
-} from 'material-ui/List';
-import Switch from 'material-ui/Switch';
+import { withStyles } from '@material-ui/core/styles';
+
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListSubheader from '@material-ui/core/ListSubheader';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+
+
+import Switch from '@material-ui/core/Switch';
 import PerspectiveIcon from '@material-ui/icons/ThreeDRotation';
 import GoLive from '@material-ui/icons/FiberSmartRecord';
 import ShowVolume from '@material-ui/icons/Assessment';

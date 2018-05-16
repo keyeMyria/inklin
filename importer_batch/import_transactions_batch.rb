@@ -30,8 +30,8 @@ end
 Mongoid.load!("./mongoid.yml", :production)
 
 
-web3 = Web3::Eth::Rpc.new host: 'geth'
-
+web3 = Web3::Eth::Rpc.new host: 'parity-service'
+ 
 begin
     syncing = web3.eth.syncing
     last_block = syncing["currentBlock"].to_i(16)
@@ -39,7 +39,7 @@ rescue => exception
     last_block = web3.eth.blockNumber
 end 
 
-last_block = 5290010
+last_block = 5290010 
 
 puts(last_block)
 

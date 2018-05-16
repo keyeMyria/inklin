@@ -17,7 +17,7 @@ spec:
 
       ports:
       - containerPort: 8545
-      args: ["--geth", "--unsafe-expose"]
+      args: ["--geth", "--unsafe-expose", "--no-warp"]
       volumeMounts:
       - mountPath: "/root/.local/share/io.parity.ethereum/"
         name: volume

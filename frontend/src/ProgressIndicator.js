@@ -1,6 +1,6 @@
 import React from 'react';
 
-import LinearProgress from 'material-ui/Progress/LinearProgress';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 
 class ProgressIndicator extends React.Component {

@@ -9,5 +9,5 @@ spec:
     type: worker
   containers:
     - name: importer
-      image: inklin/importer:latest
+      image: inklin/importer_batch:latest
      

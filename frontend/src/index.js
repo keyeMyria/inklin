@@ -5,17 +5,17 @@ import { ForceGraph2D } from 'react-force-graph'
 import MenuAppBar from './MenuAppBar'
 import VolumeChart from './VolumeChart';
 import InfoSnackBar from './InfoSnackBar'
-import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import ActionsButton from './ActionsButton';
 import ContractChooser from './ContractChooser';
 import Toggles from './Toggles';
 import SearchDialog from './SearchDialog';
 import Info from './Info'
 import ProgressIndicator from './ProgressIndicator'
+import ReactGA from 'react-ga';
 
 import './index.css';
 
-import ReactGA from 'react-ga';
 
 // Setup GA
 ReactGA.initialize('UA-64729178-1');
@@ -550,6 +550,7 @@ class Inklin extends React.Component {
 
           {this.state.displayProgress && <ProgressIndicator />}
 
+      {/*
           <ContractChooser
             choices={this.state.searchResults}
             selectedValue={this.state.contract}
@@ -557,11 +558,11 @@ class Inklin extends React.Component {
             onClose={this.handleContractChooserClose}
           />
 
-
+      */}
 
           <Toggles handleToggle={this.handleToggle} />
           <SearchDialog open={this.state.showSearch} closeDrawer={this.handleCloseSearch} />
-          <Info address={this.state.address}/>
+          <Info address={this.state.address} /> 
         </MuiThemeProvider>
       </div>
 
