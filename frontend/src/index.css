@@ -75,6 +75,19 @@ body {
     margin-top:-50px;   
 }
 
+
+.buildInfo {
+  text-align: left;
+  position: absolute;
+  bottom: 0px;
+  right: 10px;
+  color: "white";
+  z-index: 9999;
+  color: #40c4ff;
+  font-size: 12px;
+
+}
+
   .infoPane {
     position: absolute;
     bottom: 5px;

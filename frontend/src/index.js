@@ -586,6 +586,9 @@ class Inklin extends React.Component {
           <Toggles handleToggle={this.handleToggle} />
           <SearchDialog open={this.state.showSearch} closeDrawer={this.handleCloseSearch} />
           <Info address={this.state.address} blocknumber={this.state.blocknumber} blocktime={this.state.blocktime} /> 
+          <div className="buildInfo">
+            Build: {process.env.REACT_APP_SHA}
+          </div>
         </MuiThemeProvider>
       </div>
 
