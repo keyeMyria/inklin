@@ -1,5 +1,7 @@
 # build environment
 FROM node:9.6.1 as builder
+ENV REACT_APP_SHA=${REACT_APP_SHA}
+
 RUN mkdir /usr/src/app
 WORKDIR /usr/src/app
 ENV PATH /usr/src/app/node_modules/.bin:$PATH
