@@ -163,14 +163,6 @@ app.get('/api/inklin/txaddress/:address', function (req, res) {
 
 					links.push({ source: from, target: to, color: "#2aaee2" })
 				}
-
-
-
-
-
-
-
-
 			}
 
 		}

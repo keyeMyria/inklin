@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: example
+  labels:
+    heritage: brigade
+
+    project: brigade-1234567890
+
+    build: 01C1R2SYTYAR2WQ2DKNTW8SH08
+
+    component: build
+
+type: brigade.sh/build
+data:
+
+  event_provider: github
+
+  event_type: push
+
+  revision:
+
+    commit: 6913b2703df943fed7a135b671f3efdafd92dbf3
+
+    ref: master
+
+  build_name: example
+
+  project_id: brigade-1234567890
+
+  build_id: 01C1R2SYTYAR2WQ2DKNTW8SH08
+
+  payload: "{ 'foo': 'bar' }"
+
+  script: "console.log('hello');"

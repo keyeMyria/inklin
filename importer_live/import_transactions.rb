@@ -30,7 +30,7 @@ end
 Mongoid.load!("./mongoid.yml", :production)
 
 
-web3 = Web3::Eth::Rpc.new host: 'geth'
+web3 = Web3::Eth::Rpc.new host: 'parity-service'
 
 begin
     syncing = web3.eth.syncing
