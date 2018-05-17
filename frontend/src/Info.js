@@ -1,18 +1,17 @@
 
 import React from 'react';
-import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
 import AddressIcon from '@material-ui/icons/Mail';
-import ImageIcon from '@material-ui/icons/Image';
-import WorkIcon from '@material-ui/icons/Work';
-import FormatAlignJustify from '@material-ui/icons/FormatAlignJustify';
+// import ImageIcon from '@material-ui/icons/Image';
+// import WorkIcon from '@material-ui/icons/Work';
+//import FormatAlignJustify from '@material-ui/icons/FormatAlignJustify';
 
-import BeachAccessIcon from '@material-ui/icons/BeachAccess';
-import { ENFILE } from 'constants';
+//import BeachAccessIcon from '@material-ui/icons/BeachAccess';
+//import { ENFILE } from 'constants';
 
 const styles = theme => ({
   root: {
@@ -33,7 +32,7 @@ class Info extends React.Component {
   }
 
   render() {
-    const block_info = `${block_info} - ${this.props.block_time}`
+    //const block_info = `${block_info} - ${this.props.block_time}`
 
     return (
       <div className="infoPane">

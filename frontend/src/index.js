@@ -184,7 +184,7 @@ class Inklin extends React.Component {
             timing = data["entities"][i]["resolution"]["values"][0]["value"]
           }
 
-          if (data["entities"][i]["type"] === "builtin.datetimeV2.datetimerange" || data["entities"][i]["type"] == "builtin.datetimeV2.daterange") {
+          if (data["entities"][i]["type"] === "builtin.datetimeV2.datetimerange" || data["entities"][i]["type"] === "builtin.datetimeV2.daterange") {
             timing = data["entities"][i]["resolution"]["values"][0]["start"]
           }
 
@@ -238,16 +238,17 @@ class Inklin extends React.Component {
   }
 
   handleContractChooserClose = val => {
+    this.setState({contract: val.address, current_block: 0})
 
-    this.state.contract = val.address
-    this.state.current_block = 0
 
     clearInterval(this.state.timer);
 
-    this.state.data = {
+    this.setState({data: {
       nodes: [],
       links: []
-    }
+    }})
+
+    
     this.componentDidMount()
     this.setState({ showContractChooser: false })
 
@@ -256,6 +257,7 @@ class Inklin extends React.Component {
   }
 
   getAll(address) {
+
     this.setState({ data: {
       nodes: [{ id: 0, color: "black" }, { id: 1, color: "black" }],
       links: []
@@ -424,8 +426,15 @@ class Inklin extends React.Component {
     //   }, 50);
     // });
 
+    const myURL = new URL(window.location.href);
+    const searchTerm = myURL.pathname.slice(1);
+    if (searchTerm.length === 42) {
+      this.setState({address: searchTerm})
+      this.getAll(searchTerm)      
 
-    this.getAll(this.state.address)
+    } else {
+      this.getAll(this.state.address)      
+    }
     // const distance = 600;
 
     // this.fg.cameraPosition({ z: distance });

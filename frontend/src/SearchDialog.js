@@ -5,7 +5,9 @@ import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 
 
-import { ListItem, ListItemIcon, ListItemText } from '@material-ui/core/List';
+import  ListItem  from '@material-ui/core/ListItem'
+import  ListItemIcon  from '@material-ui/core/ListItemIcon' 
+import  ListItemText  from '@material-ui/core/ListItemText'
 import SearchField from './SearchField'
 import Mic from '@material-ui/icons/Mic';
 import Chat from '@material-ui/icons/Chat';

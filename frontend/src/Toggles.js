@@ -12,8 +12,8 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 
 import Switch from '@material-ui/core/Switch';
 import PerspectiveIcon from '@material-ui/icons/ThreeDRotation';
-import GoLive from '@material-ui/icons/FiberSmartRecord';
-import ShowVolume from '@material-ui/icons/Assessment';
+// import GoLive from '@material-ui/icons/FiberSmartRecord';
+// import ShowVolume from '@material-ui/icons/Assessment';
 
 import ReactGA from 'react-ga';
 
