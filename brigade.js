@@ -2,6 +2,7 @@ const { events, Job, Group } = require('brigadier')
 
 events.on("push", (brigadeEvent, project) => {
 
+    // The boring stuff
     const acrServer = project.secrets.acrServer
     const acrName = project.secrets.acrName
     const azServicePrincipal = project.secrets.azServicePrincipal
@@ -13,6 +14,8 @@ events.on("push", (brigadeEvent, project) => {
     const gitSHA = brigadeEvent.revision.commit.substr(0,7)
     const imageTag = String(gitSHA)
 
+ 
+    // The good stuff
     const frontend = new Job("job-runner-frontend")
     frontend.storage.enabled = false
     frontend.image = "microsoft/azure-cli"
