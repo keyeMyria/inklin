@@ -176,11 +176,11 @@ app.get('/api/inklin/txaddress/:address', function (req, res) {
 		}
 
 		for (i in tmp_nodes) {
-			nodes.push({ id: tmp_nodes[i], color: "white", name: "Address: " + tmp_nodes[i] + "<br/>Block Number: 1234" })
+			nodes.push({ id: tmp_nodes[i], color: "white" })
 		}
 
 		for (i in tokens) {
-			nodes.push({ id: tokens[i], color: "#2aaee2", name: tokens[i] })
+			nodes.push({ id: tokens[i], color: "#2aaee2" })
 		}
 
 		results.docs = { nodes, links }
