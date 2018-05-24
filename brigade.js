@@ -42,7 +42,7 @@ events.on("push", (brigadeEvent, project) => {
         `cd /src/api`,
         `az login --service-principal -u ${azServicePrincipal} -p ${azClientSecret} --tenant ${azTenant}`,
         `az acr build -t api:${imageTag}  -f ./Dockerfile . -r ${acrName}`
-    ] 
+    ]   
 
     const api_helm = new Job("job-runner-api-helm")
     api_helm.storage.enabled = false
