@@ -1,0 +1,5 @@
+production:
+  clients:
+    default:
+      uri: "mongodb://inklin:EsgG40AL0aCdIzD087RhzG9IdKBnb6bP2e4iEnPY2vYrxRloWVhH3SqorPphndPdBHEfWAiwLH79D64WaiQ5fg==@inklin.documents.azure.com:10255/visualise_ethereum?ssl=true&replicaSet=globaldb"
+    

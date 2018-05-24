@@ -1,0 +1,13 @@
+development:
+  clients:
+    default:
+      database: visualise_ethereum
+      hosts:
+        - localhost:27017
+
+production:
+  clients:
+    default:
+      database: visualise_ethereum
+      hosts:
+        - mongo-mongodb:27017

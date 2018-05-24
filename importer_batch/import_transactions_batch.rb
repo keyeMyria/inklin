@@ -27,10 +27,10 @@ class Transaction
     include Mongoid::Attributes::Dynamic
 end
 
-Mongoid.load!("./mongoid.yml", :production)
+Mongoid.load!("./mongoid.yml", :development)
 
 
-web3 = Web3::Eth::Rpc.new host: 'parity-service'
+web3 = Web3::Eth::Rpc.new #host: 'parity-service'
  
 begin
     syncing = web3.eth.syncing
@@ -39,16 +39,27 @@ rescue => exception
     last_block = web3.eth.blockNumber
 end 
 
-#last_block = 5290010 
+last_block = 4976839 
 
 puts(last_block)
 
+# Dups
+# Block 5018425  2018-02-02 17:24:49 +0000
+# Block 5018418  2018-02-02 17:23:40 +0000
+# Block 5018412  2018-02-02 17:21:40 +0000
+# Block 5018407  2018-02-02 17:19:39 +0000
+# Block 5018400  2018-02-02 17:17:33 +0000
+# Block 5018394  2018-02-02 17:16:21 +0000
+# Block 5018388  2018-02-02 17:14:51 +0000
+# Block 5018380  2018-02-02 17:13:45 +0000
+# Block 5018370  2018-02-02 17:11:49 +0000
+# Block 5018365  2018-02-02 17:10:54 +0000
 
 all_transactions = []
 
 transactions = []
 
-until last_block == 0
+until last_block == 4815103
 
     begin
 

@@ -34,7 +34,7 @@ spec:
         image: "{{.Values.image}}:{{.Values.imageTag}}"
         env:
         - name: MONGODB
-          value: "mongodb://mongo-mongodb:27017/visualise_ethereum"
+          value: "{{.Values.database}}"
         resources:
           requests:
             cpu: "100m"

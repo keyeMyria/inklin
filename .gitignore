@@ -2,3 +2,4 @@ frontend/node_modules/
 api/node_modules/
 frontend/build/
 .vscode/
+inklin.yaml
