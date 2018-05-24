@@ -51,7 +51,7 @@ events.on("push", (brigadeEvent, project) => {
         `helm upgrade --install --reuse-values api ./src/Charts/api --set database=${database} image=${acrServer}/api --set imageTag=${imageTag}`
     ]
     Group.runEach([frontend, frontend_helm])
-    Group.runEach([api, api_hel])
+    Group.runEach([api, api_helm])
 
 
 
