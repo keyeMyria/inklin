@@ -36,9 +36,9 @@ events.on("push", (brigadeEvent, project) => {
 
     // The good stuff
     const api = new Job("job-runner-api")
-    frontend.storage.enabled = false
-    frontend.image = "microsoft/azure-cli"
-    frontend.tasks = [
+    api.storage.enabled = false
+    api.image = "microsoft/azure-cli"
+    api.tasks = [
         `cd /src/api`,
         `az login --service-principal -u ${azServicePrincipal} -p ${azClientSecret} --tenant ${azTenant}`,
         `az acr build -t api:${imageTag}  -f ./Dockerfile . -r ${acrName}`
