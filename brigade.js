@@ -16,7 +16,7 @@ events.on("push", (brigadeEvent, project) => {
     const imageTag = String(gitSHA)
 
     // The good stuff
-    const frontend = new Job("job-runner-frontend")
+    const frontend = new Job("job-runner-frontend") 
     frontend.storage.enabled = false
     frontend.image = "microsoft/azure-cli"
     frontend.tasks = [
