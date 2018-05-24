@@ -8,7 +8,7 @@ events.on("push", (brigadeEvent, project) => {
     const azServicePrincipal = project.secrets.azServicePrincipal
     const azClientSecret = project.secrets.azClientSecret
     const azTenant = project.secrets.azTenant
-    const databse = project.secrets.database
+    const database = project.secrets.database
     const gitPayload = JSON.parse(brigadeEvent.payload)
     const today = new Date()
 
