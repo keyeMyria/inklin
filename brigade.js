@@ -48,6 +48,7 @@ events.on("push", (brigadeEvent, project) => {
     api_helm.storage.enabled = false
     api_helm.image = "lachlanevenson/k8s-helm:v2.8.2"
     api_helm.tasks = [
+        `echo helm upgrade --install --reuse-values api ./src/Charts/api --set database=${database} image=${acrServer}/api --set imageTag=${imageTag}`,
         `helm upgrade --install --reuse-values api ./src/Charts/api --set database=${database} image=${acrServer}/api --set imageTag=${imageTag}`
     ]
     Group.runEach([frontend, frontend_helm])
