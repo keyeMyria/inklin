@@ -8,7 +8,6 @@ events.on("push", (brigadeEvent, project) => {
     const azServicePrincipal = project.secrets.azServicePrincipal
     const azClientSecret = project.secrets.azClientSecret
     const azTenant = project.secrets.azTenant
-    const database = project.secrets.database
     const gitPayload = JSON.parse(brigadeEvent.payload)
     const today = new Date()
 
@@ -49,7 +48,7 @@ events.on("push", (brigadeEvent, project) => {
     api_helm.image = "lachlanevenson/k8s-helm:v2.8.2"
     api_helm.tasks = [
         `echo helm upgrade --install --reuse-values api ./src/Charts/api --set database=${database} image=${acrServer}/api --set imageTag=${imageTag}`,
-        `helm upgrade --install --reuse-values api ./src/Charts/api --set database=${database} image=${acrServer}/api --set imageTag=${imageTag}`
+        `helm upgrade --install --reuse-values api ./src/Charts/api --set image=${acrServer}/api --set imageTag=${imageTag}`
     ]
     Group.runEach([frontend, frontend_helm])
     Group.runEach([api, api_helm])
