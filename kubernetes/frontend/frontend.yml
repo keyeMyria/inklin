@@ -14,11 +14,9 @@ spec:
       labels:
         app: frontend
     spec:
-      nodeSelector:
-        type: worker
       containers:
       - name: frontend
-        image: inklin/frontend:0.7
+        image: inklin/frontend:latest
         ports:
         - containerPort: 80
    

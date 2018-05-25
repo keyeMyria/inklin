@@ -271,10 +271,7 @@ class Inklin extends React.Component {
     const links = []
 
     fetch(url).then(res => res.json()).then(data => {
-      console.log(`Got ${data.docs.length} results`);
-
-
-      this.setState({ data: data.docs, displayProgress: false })
+      this.setState({ data: data, displayProgress: false })
     });
   }
 
