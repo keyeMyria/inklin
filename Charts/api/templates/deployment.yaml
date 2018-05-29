@@ -18,7 +18,7 @@ kind: Deployment
 metadata:
   name: api
 spec:
-  replicas: {{ .Values.replicaCount }}
+  replicas: {{.Values.replicaCount}}
   selector:
     matchLabels:
       app: api
@@ -34,7 +34,7 @@ spec:
         image: "{{.Values.image}}:{{.Values.imageTag}}"
         env:
         - name: MONGODB
-+         value: "mongodb://mongo-mongodb:27017/visualise_ethereum"
+          value: "mongodb://mongo-mongodb:27017/visualise_ethereum"
         resources:
           requests:
             cpu: "100m"
