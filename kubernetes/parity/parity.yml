@@ -11,13 +11,13 @@ spec:
       image: parity/parity:nightly
       resources:
         limits:
-          memory: 4Gi
-        requests:
           memory: 2Gi
+        requests:
+          memory: 1Gi
 
       ports:
       - containerPort: 8545
-      args: ["--geth", "--unsafe-expose", "--no-warp", "--cache-size", "2048"]
+      args: ["--geth", "--unsafe-expose", "--cache-size", "2048"]
       volumeMounts:
       - mountPath: "/root/.local/share/io.parity.ethereum/"
         name: volume

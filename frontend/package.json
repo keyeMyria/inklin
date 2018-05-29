@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "gsap": "1.20.4",
     "@material-ui/codemod": "",
     "@material-ui/core": "",
     "@material-ui/icons": "",
