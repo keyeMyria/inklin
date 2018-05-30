@@ -11,6 +11,8 @@ import ContractChooser from './ContractChooser';
 import Toggles from './Toggles';
 import SearchDialog from './SearchDialog';
 import Info from './Info'
+
+
 import ProgressIndicator from './ProgressIndicator'
 import ReactGA from 'react-ga';
 
@@ -470,7 +472,7 @@ class Inklin extends React.Component {
 
   nodeClicked2d = node => {
     clearInterval(this.state.cameraOrbit);
-    if (this.fg.zoom() === 16) {
+    if (this.fg.zoom() === 2) {
       ReactGA.event({
         category: 'Graph',
         action: 'Double Click',
@@ -490,14 +492,14 @@ class Inklin extends React.Component {
       this.setState({address: node.id})
       // Aim at node from outside it
       this.fg.centerAt(node.x, node.y, 1000);
-      this.fg.zoom(16, 2000);
+      this.fg.zoom(2, 2000);
     }
   };
 
 
   nodeHover2d = node => {
     if (node) {
-    this.setState({address: node.id})
+      this.setState({address: node.id})
     }
   };
 
@@ -583,6 +585,7 @@ class Inklin extends React.Component {
           <Toggles handleToggle={this.handleToggle} />
           <SearchDialog open={this.state.showSearch} closeDrawer={this.handleCloseSearch} />
           <Info address={this.state.address} blocknumber={this.state.blocknumber} blocktime={this.state.blocktime} /> 
+
           <div className="buildInfo">
             Build: {process.env.REACT_APP_SHA}
           </div>

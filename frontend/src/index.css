@@ -88,18 +88,35 @@ body {
 
 }
 
-  .infoPane {
-    position: absolute;
-    bottom: 5px;
-    right: 10px;
-    opacity: .6;
-    padding-right: 10px;
+.infoPane {
+  position: absolute;
+  bottom: 5px;
+  right: 10px;
+  opacity: .6;
+  padding-right: 10px;
 
-    /* Height of the footer */
-    z-index: 9999;
-    color: #40c4ff;
-    background-color: black;
-  }
+  /* Height of the footer */
+  z-index: 9999;
+  color: #40c4ff;
+  background-color: black;
+}
+
+.vertical-timeline-element-title {
+  font-size: 10px;
+}
+
+.timeline {
+  position: absolute;
+  bottom: 100px;
+  right: 10px;
+  opacity: .6;
+  padding-right: 10px;
+
+  /* Height of the footer */
+  z-index: 9999;
+  color: #40c4ff;
+  background-color: black;
+}
   .menu {
     position: absolute;
     top: 0px;

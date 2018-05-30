@@ -65,5 +65,4 @@ class MenuAppBar extends React.Component {
 }
 
 export default withStyles(styles)(MenuAppBar);
-//export default MenuAppBar;
 
